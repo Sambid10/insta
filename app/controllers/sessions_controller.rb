@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  before_action :user_already_loggedin ,only: [:new]
   def new
   end
 
@@ -16,5 +17,12 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id]=nil
     redirect_to root_url,notice:"Logged out!"
+  end
+
+  private
+  def user_already_loggedin
+    if current_user 
+      redirect_to root_path
+    end
   end
 end

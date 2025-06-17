@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
+ 
   before_action :set_user, only: %i[ show edit update destroy ]
-
+  before_action :user_already_loggedin
   # GET /users or /users.json
   def index
     @users = User.all
@@ -68,4 +69,12 @@ class UsersController < ApplicationController
     def user_params
       params.expect(user: [ :email, :password, :password_confirmation ])
     end
+
+
+    private
+    def user_already_loggedin
+    if current_user 
+      redirect_to root_path
+    end
+  end
 end
