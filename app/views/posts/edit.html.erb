@@ -1,0 +1,12 @@
+<div class="max-w-6xl px-4 lg:px-0 mx-auto min-h-[calc(100dvh-80px)] flex flex-col items-center justify-center">
+<h1 class="text-2xl font-semibold mb-4">Edit Post</h1>
+<div class="bg-gray-700 rounded-xl px-4 py-4 text-white w-[80%] md:w-[70%] lg:w-[40%] h-fit">
+        <%= simple_form_for @post, html: { class: "w-full flex flex-col gap-3 w-full text-white" } do |f| %>
+        <%= f.input :photo, as: :file, input_html: { class: "w-full mt-2 text-sm text-white file:py-2  file:rounded-xl rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-black hover:file:bg-gray-200" } %>
+        <%= f.input :description, input_html: { class: "flex mt-2 w-full items-center bg-white rounded-xl text-black" } %>
+        <div class="flex justify-end">
+            <%= f.submit 'Update',class:"bg-gray-300  w-24 h-9 rounded-xl cursor-pointer text-black" %>
+        </div>
+        <% end %>
+    </div>
+</div>

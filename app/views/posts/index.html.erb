@@ -1,0 +1,43 @@
+<div class="max-w-2xl mx-auto min-h-[calc(100dvh-80px)] px-4 lg:px-0">
+    <% @posts.each do |post| %>
+
+    <div class="border-b group relative z-0 border-gray-300 pb-6 flex flex-col gap-2 ">
+        <%= image_tag post.user.photo if post.user.photo.attached?%>
+        <br />
+        <div class="flex items-center gap-2 h-9">
+            <div class="h-full w-9 rounded-full bg-gray-300">
+            </div>
+            <h1 class="-mt-1">
+                <%= link_to post.user.email.split('@').first, user_path(post.user), class: "text-2xl  font-semibold" %>
+            </h1>
+        </div>
+        <% if post.user==current_user %>
+        <div data-controller="dropdown">
+            <button id="dropdownButton" data-action="click->dropdown#toggle" type="button" class="cursor-pointer absolute top-8 right-0 flex justify-center z-0 items-center rounded-full border border-gray-200 shadow-sm h-8 w-8  bg-white text-sm font-medium text-gray-700 opacity-90 hover:bg-gray-50">
+                <svg class="w-[14px] h-[14px] text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
+                </svg>
+            </button>
+            <div data-dropdown-target="menu" id="dropdownMenu" class="hidden absolute right-0 lg:-right-32 shadow-lg z-30  h-fit w-40 px-4 py-2 rounded-md shadow-xl bg-gray-100 ring-1 ring-gray-400 ring-opacity-5">
+                <div class="flex flex-col gap-2 w-full h-full">
+                    <div class="w-full cursor-pointer">
+                        <%= link_to 'Edit Post', edit_post_path(post.id), class: 'block text-white w-full bg-blue-700 text-center hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-2xl text-sm  py-2 me-2  dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none dark:focus:ring-blue-800' %>
+                    </div>
+                    <div>
+                        <%= button_to 'Delete Post', post_path(post.id), method: :delete, class: 'text-white cursor-pointer w-full bg-red-700 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-medium rounded-2xl text-sm py-2 me-2  dark:bg-rose-500 dark:hover:bg-rose-600 focus:outline-none dark:focus:ring-red-800' %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% end %>
+
+        <%= image_tag post.photo ,class:"aspect-[16/9] rounded-xl shadow-lg border border-gray-200"%>
+
+        <%= render partial: 'likes', locals: {post: post} %>
+        <h1 class="-mt-2 text-gray-800 font-medium">
+            <%= post.description %>
+        </h1>
+        <%= render partial: 'comment',locals:{post:post} %>
+    </div>
+    <% end %>
+</div>
